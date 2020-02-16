@@ -1,17 +1,17 @@
 package org.golie.bot.logic.objects;
 
 
+import java.util.Set;
+
 public class Image {
 
-    private int id;
     private String url;
+    private Set<String> tags;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Image(String url, Set<String> tags)
+    {
+        this.url = url;
+        this.tags = tags;
     }
 
     public String getUrl() {
@@ -20,5 +20,13 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
     }
 }

@@ -1,12 +1,16 @@
 package org.golie.bot.logic.connectors;
 
+import org.golie.bot.logic.objects.Image;
+
+import java.util.Set;
+
 public class RestConnector implements IConnector {
 
     private boolean isConnected;
 
     public RestConnector(String path, String token)
     {
-
+        isConnected = false;
     }
 
     @Override
@@ -15,12 +19,12 @@ public class RestConnector implements IConnector {
     }
 
     @Override
-    public int sendImage(String author, String url, String[] tags) {
+    public int sendImage(Image image) {
         return 0;
     }
 
     @Override
     public boolean reconnect() {
-        return false;
+        return isConnected;
     }
 }

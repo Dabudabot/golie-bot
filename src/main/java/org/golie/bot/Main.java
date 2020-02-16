@@ -18,15 +18,32 @@ public class Main {
 
     private static final String PROPERTIES_FILE = "config.properties";
 
+    /**
+     * Entry point of the project
+     * Initialize properties
+     * Initialize connections
+     * Initialize bots
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
+        // properties file from resources
         Properties properties = readProperties();
+
+        // connections to possible sources of data
+        // get instance of the Connector to connect to all
+        // possible sources
         IConnector connector = new Connector(properties);
 
+        // need just to call ctor and all magic will happen
         Bot vk = new VkBot(properties,
                 connector,
                 Map.ofEntries(
-                        new AbstractMap.SimpleEntry<String, ICommand>("/system-reserved-image-command", new ImageCommand())
+                        new AbstractMap.SimpleEntry<String, ICommand>(
+                                properties.getProperty("system_reserved_image_command"),
+                                new ImageCommand()
+                        )
                 )
         );
     }

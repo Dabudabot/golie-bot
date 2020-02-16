@@ -1,5 +1,7 @@
 package org.golie.bot.logic.connectors;
 
+import org.golie.bot.logic.objects.Image;
+
 import java.util.Properties;
 
 public class Connector implements IConnector {
@@ -10,7 +12,6 @@ public class Connector implements IConnector {
 
     public Connector(Properties properties)
     {
-        connected = false;
         jsonConnector = new JSONConnector(properties.getProperty("json_file"));
         restConnector = new RestConnector(
                 properties.getProperty("back_url"),
@@ -18,19 +19,26 @@ public class Connector implements IConnector {
         );
 
         reconnect();
+        connected = true;
     }
 
     @Override
-    public int sendImage(String author, String url, String[] tags)
-    {
+    public int sendImage(Image image) {
+
         if (restConnector.isConnected())
         {
-            return restConnector.sendImage(author, url, tags);
+            if (jsonConnector.isConnected()) {
+                for (Image oldImage : jsonConnector.getImages()) {
+                    restConnector.sendImage(oldImage);
+                }
+                jsonConnector.cleanImages();
+            }
+            return restConnector.sendImage(image);
         }
 
         if (jsonConnector.isConnected())
         {
-            return jsonConnector.sendImage(author, url, tags);
+            return jsonConnector.sendImage(image);
         }
 
         return -1;
@@ -39,13 +47,16 @@ public class Connector implements IConnector {
     @Override
     public boolean reconnect()
     {
-        // todo check connectivity in the loop in separate thread
+        Thread thread = new Thread(() -> {
+            while (true) {
+                jsonConnector.reconnect();
+                restConnector.reconnect();
+            }
+        });
 
-        while (true)
-        {
-            jsonConnector.reconnect();
-            restConnector.reconnect();
-        }
+        thread.start();
+
+        return true;
     }
 
     @Override

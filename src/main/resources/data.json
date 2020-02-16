@@ -1,0 +1,56 @@
+{
+  "images": [
+    {
+      "id":0,
+      "url":"example.org",
+      "tags":["tag1", "tag2"]
+    }
+  ],
+  "responses": [
+    {
+      "id":0,
+      "probability":10,
+      "keywords":["я"],
+      "responses:":["ну и пошел ты нахуй"]
+    },
+    {
+      "id":1,
+      "probability":10,
+      "keywords":[
+        "<system-reserved-keyword0>ать",
+        "<system-reserved-keyword0>ить",
+        "<system-reserved-keyword0>ять"],
+      "responses:":["<system-reserved-keyword0> для пидоров"]
+    },
+    {
+      "id":2,
+      "probability":50,
+      "keywords":["бля"],
+      "responses:":["э, не матерись нахуй, бля"]
+    },
+    {
+      "id":3,
+      "probability":99,
+      "keywords":["нет"],
+      "responses:":["пидора ответ"]
+    },
+    {
+      "id":4,
+      "probability":10,
+      "keywords":[],
+      "responses:":["я не понимаю..."]
+    },
+    {
+      "id":5,
+      "probability":90,
+      "keywords":["https://youtu.be<system-reserved-any>"],
+      "responses:":["хуйня"]
+    },
+    {
+      "id":6,
+      "probability":50,
+      "keywords":["<system-reserved-any-num>"],
+      "responses:":["это сколько?"]
+    }
+  ]
+}
